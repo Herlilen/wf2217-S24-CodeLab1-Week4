@@ -1,5 +1,14 @@
-# FILL IN INFO ABOUT YOUR GAME HERE. 
+# AIMPUNK 
 
-DO NOT LEAVE IT LIKE THIS!!!
+[CONTROL]
+WASD - Movement
+SPACE - Jump
+E- Interact
+LMB - Shoot
 
-Please? Please, give me content. I'm begging you. It's not that hard. Thanks.
+[OBJECTIVE]
+Use the yellow button to start the game, and try to shoot as many targets as possible in ten seconds
+
+[CREDITS]
+Art & Sound effect innovation from Kamen Rider 555
+Count Down sound effect: https://youtube.com/watch?v=-9RwcTa8__o
