@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip _clip;
     private AudioSource _audioSource;
     [SerializeField] private float twoSecCountDown = 3;
-    [SerializeField] private float gameCountDown = 10;
+    public float gameCountDown = 10;
 
     [Header("Targets")] 
     [SerializeField] private GameObject targets;
@@ -265,13 +265,13 @@ public class GameManager : MonoBehaviour
         //score
         if (gameStart)
         {
-            display.text = "\n" + "\n" + "\n" + "\n" + ""+ score + "";
+            display.text = "\n" + "\n" + "\n" + "\n" + "\n" + "\n" + ""+ score + "";
         }
         else
         {
             if (startedOnce)
             {
-                display.text = "FINAL SCORE: "+ score + "\n" + "\nHIGH SCORES: \n" + highScoresString;
+                display.text = "FINAL SCORE: "+ "\n" + score + "\n" + "\nHIGH SCORES: \n" + highScoresString;
             }
         }
     }

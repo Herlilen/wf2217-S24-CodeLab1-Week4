@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = System.Random;
 
@@ -15,6 +16,8 @@ public class CharacterControl : MonoBehaviour
     [Header("HUD")] 
     [SerializeField] private LayerMask button;
     [SerializeField] private TextMeshProUGUI popupText;
+    [SerializeField] private TextMeshProUGUI tenSec;
+    private float tenSecCountDown;
 
     [Header("Gravity")]
     [SerializeField] private float gravityValue;
@@ -71,6 +74,7 @@ public class CharacterControl : MonoBehaviour
         Jump();
         Button();
         Shoot();
+        TenSec();
     }
 
     void Gravity()
@@ -181,5 +185,25 @@ public class CharacterControl : MonoBehaviour
                 }
             }
         }
+    }
+
+    void TenSec()
+    {
+        tenSecCountDown = GameManager.instance.gameCountDown;
+        Color secColor = new Color(255, 0, 0, 1);
+        Color noSecColor = new Color(255, 0, 0, 0);
+        //activate the timer when game start
+        if (gameStart)
+        {
+            tenSec.color = secColor;
+        }
+        else
+        {
+            tenSec.color = noSecColor;
+        }
+        //timer into sec and millisec
+        int sec;
+        sec = Mathf.FloorToInt(tenSecCountDown);
+        tenSec.text = "" + sec;
     }
 }
