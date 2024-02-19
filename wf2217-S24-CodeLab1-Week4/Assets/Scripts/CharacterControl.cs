@@ -152,6 +152,7 @@ public class CharacterControl : MonoBehaviour
             {
                 //game start
                 GameManager.instance.gameStart = true;
+                GameManager.instance.startedOnce = true;
             }
         }
         else
@@ -170,7 +171,7 @@ public class CharacterControl : MonoBehaviour
                 if (hit.transform.tag == "targets")
                 {
                     //score goes up
-                    GameManager.instance.score++;
+                    GameManager.instance.Score++;
                     //relocate targets
                     hit.transform.position = new Vector3(
                         UnityEngine.Random.Range(-14.5f, 14.5f),

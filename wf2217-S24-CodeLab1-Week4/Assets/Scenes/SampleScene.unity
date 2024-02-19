@@ -1967,6 +1967,9 @@ MonoBehaviour:
   hasSpawned: 0
   display: {fileID: 1078209346}
   score: 0
+  finalScore: 0
+  startedOnce: 0
+  storeHighScore: 0
 --- !u!4 &171998963
 Transform:
   m_ObjectHideFlags: 0
@@ -4585,7 +4588,7 @@ Transform:
   m_GameObject: {fileID: 472248879}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.09, y: 0, z: -11.73}
+  m_LocalPosition: {x: 8.09, y: -6.3, z: -11.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9108,7 +9111,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "FINAL SCORE: \n0\n\nHIGH SCORES:\n0\n0\n0\n0\n0"
+  m_text: START
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

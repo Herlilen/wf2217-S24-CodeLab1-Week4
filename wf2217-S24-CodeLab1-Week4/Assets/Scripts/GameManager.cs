@@ -33,9 +33,13 @@ public class GameManager : MonoBehaviour
     [Header("Score")] 
     public TextMeshProUGUI display;     //get ui text
     public int score;
+    public int finalScore;
     private const string FILE_DIR = "/DATA/";       //set path
     private const string DATA_FILE = "highScores.txt";
     private string FILE_FULL_PATH;
+    public bool startedOnce = false;
+    public bool storeHighScore = false;
+    private bool restartScore = false;
 
     public int Score
     {
@@ -47,22 +51,63 @@ public class GameManager : MonoBehaviour
         {
             score = value;
 
-            if (isHighScore(score))     //only proceed if score is high score
-            {
-                int highScoreSlot = -1;     //set the slot that is going to be replaced
+            // if (isHighScore(score))     //only proceed if score is high score
+            // {
+            //     int highScoreSlot = -1;     //set the slot that is going to be replaced
+            //
+            //     for (int i = 0; i < HighScores.Count; i++)      //for each high score in the list
+            //     {
+            //         if (score > highScores[i])
+            //         {
+            //             highScoreSlot = i;      //get the slot that is going to be replaced
+            //             break;
+            //         }
+            //     }
+            //
+            //     highScores.Insert(highScoreSlot, score);    //replace the score
+            //
+            //     highScores = highScores.GetRange(0, 5);     //returns the new list
+            //
+            //     string scoreBoardText = "";
+            //
+            //     foreach (var highScore in highScores)
+            //     {
+            //         scoreBoardText += highScore + "\n";
+            //     }
+            //
+            //     highScoresString = scoreBoardText;
+            //     
+            //     File.WriteAllText(FILE_FULL_PATH, highScoresString);
+            // }
+        }
+    }
 
-                for (int i = 0; i < HighScores.Count; i++)      //for each high score in the list
+    public int FinalScore
+    {
+        get
+        {
+            return finalScore;
+        }
+        set
+        {
+            finalScore = value;
+
+            if (isHighScore(finalScore)) //only proceed if score is high score
+            {
+                int highScoreSlot = -1; //set the slot that is going to be replaced
+
+                for (int i = 0; i < HighScores.Count; i++) //for each high score in the list
                 {
-                    if (score > highScores[i])
+                    if (finalScore > highScores[i])
                     {
-                        highScoreSlot = i;      //get the slot that is going to be replaced
+                        highScoreSlot = i; //get the slot that is going to be replaced
                         break;
                     }
                 }
 
-                highScores.Insert(highScoreSlot, score);    //replace the score
+                highScores.Insert(highScoreSlot, finalScore); //replace the score
 
-                highScores = highScores.GetRange(0, 5);     //returns the new list
+                highScores = highScores.GetRange(0, 3); //returns the new list
 
                 string scoreBoardText = "";
 
@@ -77,7 +122,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+    
     private string highScoresString = "";
 
     private List<int> highScores;
@@ -102,10 +147,8 @@ public class GameManager : MonoBehaviour
                     highScores.Add(currentScore);
                 }
             }
-
             return highScores;
         } 
-
     }
     
     
@@ -125,6 +168,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        startedOnce = false;
         _audioSource = GetComponent<AudioSource>();
         FILE_FULL_PATH = Application.dataPath + FILE_DIR + DATA_FILE;
     }
@@ -135,19 +180,32 @@ public class GameManager : MonoBehaviour
         //start 3 sec count down
         if (gameStart)
         {
+            storeHighScore = false;
             twoSecCountDown -= Time.deltaTime;
             if (twoSecCountDown <= 0)
             {
                 twoSecCountDown = 0;
             }
+
+            if (!restartScore)
+            {
+                Score = 0;
+                restartScore = true;
+            }
         }
         else
         {
+            if (!storeHighScore)
+            {
+                FinalScore = Score;
+                storeHighScore = true;
+            }
             twoSecCountDown = 3;
             gameCountDown = 10;
             hasSpawned = false;
             //discard all targets
             DeleteTargets();
+            restartScore = false;
         }
         
         //set light intensity
@@ -207,11 +265,14 @@ public class GameManager : MonoBehaviour
         //score
         if (gameStart)
         {
-            display.text = ""+ score + "";
+            display.text = "\n" + "\n" + "\n" + "\n" + ""+ score + "";
         }
         else
         {
-            display.text = "FINAL SCORE: " + "\n" + score + "\n" + "\nHIGH SCORES: \n" + "\n" + highScoresString;
+            if (startedOnce)
+            {
+                display.text = "FINAL SCORE: "+ score + "\n" + "\nHIGH SCORES: \n" + highScoresString;
+            }
         }
     }
 
