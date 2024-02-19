@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = System.Random;
 
 public class CharacterControl : MonoBehaviour
 {
@@ -69,6 +70,7 @@ public class CharacterControl : MonoBehaviour
         PlayerMovementControl();
         Jump();
         Button();
+        Shoot();
     }
 
     void Gravity()
@@ -155,6 +157,28 @@ public class CharacterControl : MonoBehaviour
         else
         {
             popupText.color = noColor;
+        }
+    }
+
+    void Shoot()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out hit, 1000f))
+            {
+                if (hit.transform.tag == "targets")
+                {
+                    //score goes up
+                    GameManager.instance.score++;
+                    //relocate targets
+                    hit.transform.position = new Vector3(
+                        UnityEngine.Random.Range(-14.5f, 14.5f),
+                        UnityEngine.Random.Range(.5f, 5.5f),
+                        UnityEngine.Random.Range(-14.5f, 14.5f)
+                    );
+                }
+            }
         }
     }
 }
