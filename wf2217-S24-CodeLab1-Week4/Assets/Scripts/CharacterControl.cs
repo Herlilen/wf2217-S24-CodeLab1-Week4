@@ -1,11 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CharacterControl : MonoBehaviour
 {
     public static CharacterControl instance;
+
+    [Header("Game Start")] 
+    [SerializeField] private bool gameStart;
+    
+    [Header("HUD")] 
+    [SerializeField] private LayerMask button;
+    [SerializeField] private TextMeshProUGUI popupText;
 
     [Header("Gravity")]
     [SerializeField] private float gravityValue;
@@ -23,7 +31,6 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private bool grounded;
     [SerializeField] private float playerSpeed;
     [SerializeField] private float jumpPower;
-    
     
     
 
@@ -52,6 +59,8 @@ public class CharacterControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //get game start value
+        gameStart = GameManager.instance.gameStart;
         //grounded bool for jump & gravity
         grounded = IsGrounded();
         //player functions
@@ -59,6 +68,7 @@ public class CharacterControl : MonoBehaviour
         CameraControl();
         PlayerMovementControl();
         Jump();
+        Button();
     }
 
     void Gravity()
@@ -124,5 +134,27 @@ public class CharacterControl : MonoBehaviour
     Boolean IsGrounded()
     {
         return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+    }
+
+    void Button()
+    {
+        //deal with hud
+        Color color = new Color(255,255,255,1);
+        Color noColor = new Color(0, 0, 0, 0);
+        RaycastHit hit;
+        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out hit, 1.5f, button) && !GameManager.instance.gameStart)
+        {
+            //set color
+            popupText.color = color;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                //game start
+                GameManager.instance.gameStart = true;
+            }
+        }
+        else
+        {
+            popupText.color = noColor;
+        }
     }
 }
