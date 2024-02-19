@@ -1,7 +1,5 @@
 # AIMPUNK 
 
-
-
 [CONTROL]
 
 WASD - Movement
@@ -12,13 +10,9 @@ E- Interact
 
 LMB - Shoot
 
-
-
 [OBJECTIVE]
 
 Use the yellow button to start the game, and try to shoot as many targets as possible in ten seconds.
-
-
 
 [CREDITS]
 
